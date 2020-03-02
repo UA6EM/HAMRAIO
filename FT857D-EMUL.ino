@@ -44,6 +44,12 @@
 
 ft857d radio = ft857d();
 
+#include <Wire.h>
+#include <SPI.h>
+#include <LiquidCrystal_I2C.h>        // брал здесь - https://iarduino.ru/file/134.html
+LiquidCrystal_I2C lcd(0x3F, 20, 4);   // Для экрана 20х4, I2C адрес дисплея уточнить  
+
+
 // variables
 volatile long freq = 7110000;
 volatile int band = 0;
@@ -208,6 +214,8 @@ void pressButton(){
         if(band == 434) freq = 434154200;
                 delay(20);
         EEPROM.put(eeprom_freqadr,freq); 
+        myDisplay();
+        
     }
     
     if (flag_button == 0 && digitalRead(BUTTON) == 0){ //button ON (кнопка нажата)
@@ -232,7 +240,14 @@ void pressButton(){
                 delay(20);
     }
 }
-  
+
+   void myDisplay(){
+   lcd.setCursor(0, 1);                  // 1 строка
+   lcd.print("Freq =           ");
+   lcd.setCursor(7, 1);                   //1 строка 7 позиция
+   lcd.print(freq/1000);
+   lcd.print("kHz");
+ }
 
 
 void setup() {
@@ -274,9 +289,22 @@ void setup() {
     pinMode(BUTTON,INPUT_PULLUP);
     pinMode(LED,OUTPUT);
     band = freq/1000000;
+
+//    lcd.init(); //для библиотеки V112
+    lcd.begin();
+  //  lcd.backlight();
+    delay(10);
+    lcd.setCursor(4, 0);                  // 0 строка
+    lcd.print("FT-857/D");
+    lcd.setCursor(0, 1);                  // 1 строка
+    lcd.print("Freq =           ");
+    lcd.setCursor(7, 1);                  //1 строка 7 позиция
+    lcd.print(freq/1000);
+    lcd.print("kHz");
 }
 
 void loop() {
     radio.check();
     pressButton();
+  //  myDisplay();
 }
