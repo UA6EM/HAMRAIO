@@ -13,5 +13,5 @@ FT857D-EMUL: The emulator program of popular transceivers from YAESU models FT-8
 *********************************************************************************************************************************
 
 3. UART_toETH
-Программа конвертера UART в ETHERNET. Описание здесь - https://habr.com/ru/post/109395/
+Программа конвертера UART в ETHERNET. Описание здесь - https://soltau.ru/index.php/arduino/item/556-preobrazovatel-uart-v-ethernet-na-arduino
 *********************************************************************************************************************************
